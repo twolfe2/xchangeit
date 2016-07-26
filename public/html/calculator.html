@@ -18,7 +18,7 @@
 
 	<h2 class="calculatorTitle">Calculate your Xchange rate</h2>
 
-	<div>	
+	<div>
 		<select ng-model='baseCurrency' class="inputDropDown" type="text" placeholder="placeholder" spellcheck="false" required>
             <option selected value="">Select currency</option>
             <option value="AUD">Australia Dollars – AUD</option>
@@ -53,7 +53,7 @@
 	</div>
 
 	<div class="text-center">
-		<button class="btn btn-info" id="calculateBtn" ng-click='calculateRate()'>Calculate</button>
+		<button ng-class="{'fa fa-spinner fa-pulse': isLoading}" class="btn btn-info findMatchBtn text-center" id="calculateBtn" ng-click='calculateRate()'>{{labelText}}</button>
 	</div>
 
 
@@ -61,6 +61,6 @@
 		<p>The current exchange rate is: {{showExchangeRateP1 | number:4 }}</p>
 		<p class='renderExchangeText'> {{amountToTrade | currency:base}} is equal to {{ showExchangeRate | currency :  wanted }}
 		</p>
-	
+
 	</div>
 </div>

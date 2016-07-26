@@ -35,7 +35,7 @@ app.controller('formpageCtrl', function($scope, $timeout, $q, $log,$http, User,$
     // debugger;
     $scope.buttonText = '';
     $scope.isLoading = true;
-    User.addUser($scope.newUser) 
+    User.addUser($scope.newUser)
       .then(res => {
         $scope.isLoading = false;
         $scope.buttonText = 'Find Match';
@@ -43,17 +43,17 @@ app.controller('formpageCtrl', function($scope, $timeout, $q, $log,$http, User,$
         if(res.data.foundMatch) {
           SweetAlert.swal({
             title:"We found a match!",
-            text: res.data.message, 
+            text: res.data.message,
             type: "success"},
             function() {
               $state.go('calculator');
           });
           // alert(res.data.message);
-          
+
         } else {
          SweetAlert.swal({
             title:"Information Submited!",
-            text: res.data.message, 
+            text: res.data.message,
             type: "success"},
             function() {
               $state.go('calculator');
@@ -61,10 +61,10 @@ app.controller('formpageCtrl', function($scope, $timeout, $q, $log,$http, User,$
           // alert(res.data.message);
           // $state.go('calculator');
         }
-        
+
       })
 
-    
+
   }
 
 
@@ -138,9 +138,16 @@ app.controller('formpageCtrl', function($scope, $timeout, $q, $log,$http, User,$
 
 
 app.controller('calculatorCtrl', function($scope, Exchanges, $state) {
+  $scope.labelText = 'Calculate';
+  console.log("$scope.labelText: ", $scope.labelText);
   console.log('calculatorCtrl!');
   // console.log(fx);
+  $scope.isLoading=false;
+
   $scope.calculateRate = () => {
+    $scope.isLoading=true;
+    $scope.labelText = '';
+    console.log("$scope.labelText: ", $scope.labelText);
 
     Exchanges.getAll()
       .then(res => {
@@ -154,6 +161,8 @@ app.controller('calculatorCtrl', function($scope, Exchanges, $state) {
             base: res.data.base
           }
         }
+        $scope.isLoading=false;
+        $scope.labelText = 'Calculate';
         $scope.showExchangeRateP1 = angular.copy((fx.convert(1.00, { from: $scope.baseCurrency, to: $scope.wantedCurrency })));
         $scope.showExchangeRate = angular.copy((fx.convert(parseInt($scope.amountToTrade), { from: $scope.baseCurrency, to: $scope.wantedCurrency })));
         $scope.base =$scope.baseCurrency;
@@ -168,7 +177,3 @@ app.controller('calculatorCtrl', function($scope, Exchanges, $state) {
 
 
 });
-
-
-
-

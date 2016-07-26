@@ -144,9 +144,16 @@ app.controller('formpageCtrl', function ($scope, $timeout, $q, $log, $http, User
 });
 
 app.controller('calculatorCtrl', function ($scope, Exchanges, $state) {
+  $scope.labelText = 'Calculate';
+  console.log("$scope.labelText: ", $scope.labelText);
   console.log('calculatorCtrl!');
   // console.log(fx);
+  $scope.isLoading = false;
+
   $scope.calculateRate = function () {
+    $scope.isLoading = true;
+    $scope.labelText = '';
+    console.log("$scope.labelText: ", $scope.labelText);
 
     Exchanges.getAll().then(function (res) {
       if (typeof fx !== "undefined" && fx.rates) {
@@ -159,6 +166,8 @@ app.controller('calculatorCtrl', function ($scope, Exchanges, $state) {
           base: res.data.base
         };
       }
+      $scope.isLoading = false;
+      $scope.labelText = 'Calculate';
       $scope.showExchangeRateP1 = angular.copy(fx.convert(1.00, { from: $scope.baseCurrency, to: $scope.wantedCurrency }));
       $scope.showExchangeRate = angular.copy(fx.convert(parseInt($scope.amountToTrade), { from: $scope.baseCurrency, to: $scope.wantedCurrency }));
       $scope.base = $scope.baseCurrency;
